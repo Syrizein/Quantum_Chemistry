@@ -1,2 +1,2 @@
-# Quantum_Chemistry
-My explorations on quantum chemistry
+# Quantum Chemistry
+This repulsory includes my talks and codes on quantum chemistry.
