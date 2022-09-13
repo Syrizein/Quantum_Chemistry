@@ -1,0 +1,377 @@
+%
+% 使用 xelatex 编译
+%
+\documentclass[aspectratio=169,10pt,compress,t]{ctexbeamer}
+\usetheme{Berlin}
+\usecolortheme{dolphin}
+\usefonttheme[onlymath]{serif}
+
+%%%%% ===== 常用宏包 =======================================================
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage[version=3]{mhchem} 
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+\usepackage{braket}
+\usepackage[style=verbose]{biblatex}
+\usepackage{caption,subcaption}
+\usepackage{ulem}
+\usepackage{color}
+\definecolor{PPTBlue}{RGB}{51,51,178}
+
+\addbibresource{ref.bib}
+\setbeamerfont{footnote}{size=\tiny}
+
+\begin{document}
+
+\title[QC1]{Quantum Chemistry I}
+\subtitle{Mathematical Backgrounds}
+
+\author[XYJ]{Yunjie Xu}
+\institute[HIT]{\zihao{-5} Harbin Institute of Technology}
+\date[2022.08]{August 2022}
+
+\begin{frame}[plain]
+  \begin{figure}[h]
+    \includegraphics[height=3cm]{HIT.png}
+    \centering
+  \end{figure}
+  \titlepage
+\end{frame}
+
+\begin{frame}{List of Contents}
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+% 在每节前插入目录
+\AtBeginSection[]{\frame{\tableofcontents[currentsection,hideallsubsections]}}
+
+\section{Linear Space}
+\begin{frame}{Linear Space}
+In the very beginning, we have to revise some of the basic notions.
+
+\begin{block}{Linear Space}
+    A linear space $V$ on field $\mathcal{F}$ is defined as a set eqquiped with two operations:
+    addition $V×V→V$ and scalar product $\mathcal{F}×V→V$, with the operations satisfying:
+    \begin{enumerate}
+      \item addition associativity: $(u+v)+w=u+(v+w)=u+v+w$
+      \item existance of identity element: there exists 0, $0+v=v$
+      \item existance of inverse elements: for any $v$ exists $v'$, $v+v'=v'+v=0$
+      \item scalar product associativity: $a(bv) = (ab)v = abv$
+      \item existance of identity element: there exists 1, $1v=v$
+      \item distributivity: $(a+b)v = av+ bv$, $a(u+v) = au+ av$
+    \end{enumerate}
+\end{block}  
+\end{frame}
+
+\begin{frame}{Linear Space}
+
+\begin{block}{pre-Hilbert Space}
+    A pre-Hilbert space $\mathcal{F}$ is a linear space eqquiped with inner product 
+    $$< , >: \mathcal{F} × \mathcal{F} → \mathbb{C}$$
+    satisfying:
+    \begin{enumerate}
+      \item $<au+bv, w> = a<u,w>+ b<v,w>$
+      \item $<u, v> = <v, u>^*$
+      \item $<x, x> = \Vert x \Vert^2 \geq 0 $ . Equality holds if and only if $x = 0$.
+    \end{enumerate}
+\end{block}  
+
+\begin{block}{Hilbert Space}
+  A Hilbert space $\mathcal{H}$ is a Cauchy-complete pre-Hilbert space.
+\end{block}  
+\end{frame}
+
+\begin{frame}{Operators}
+\begin{block}{Operators}
+  An operator is a mapping $\mathscr{O}: u → v$.
+  
+  The operator is linear if for any $u, v$:
+  $$\mathscr{O}(au+bv)=a\mathscr{O}u+b\mathscr{O}v$$
+\end{block}  
+\uncover<2->{
+Exersice A: Linear operator $\mathscr{O}$ on finite-dimentional linear space $V$ could be represented by
+a $dim(V\,) × dim(V\,)$ matrix. Why?
+}
+
+\end{frame}
+
+\section{Linear Space in Quantum Mechanics}
+\begin{frame}{Dirac Bra-ket Notions}
+Dirac denote the vectors in Hilbert spaces as $\ket{a}$.
+The corresponding covector is denoted as $\bra{a}$.
+
+The inner product is defined as:
+$$\bra{a} \ket{b} = \braket{a|b} = a^\dagger b = \sum a_i^* b_i$$
+
+Tips: use $\mathtt{braket}$ package in \LaTeX.
+
+\bigskip
+
+\uncover<2->{
+Exercise B: What does $\ket{v\,}\bra{v\,}$ mean? Show that for a complete set
+of basis {$\ket{i\,}$}:
+$$\sum \ket{i\,} \bra{i\,} = \mathbf{1}$$
+where $\mathbf{1}$ is the identity operator.
+
+}
+\end{frame}
+
+\begin{frame}{Functional Notions}
+The functional notions corresponds to the wave mechanics.
+
+The vectors are now functions $a(x)$.
+
+The inner product are defined as follows:
+$$\int_\Omega dx a^*(x) b(x)$$
+
+Integrals replace summations.
+$$\sum \ket{i\,} \bra{i\,} = \mathbf{1}$$
+$$\int dx \ket{i\,} \bra{i\,} = \mathbf{1}$$
+\end{frame}
+
+\begin{frame}{Operators, Continued}
+\begin{block}{Local and Nonlocal Operators}
+  An nonlocal operator is defined like:
+  $$b(x) = \int_\Omega dx' O(x, x') a(x')$$
+  An local operator is defined like:
+  $$b(x) = \int_{\delta(x, \epsilon)} dx' O(x, x') a(x')$$
+  Example of local operators: $x$, $p$, $L_z$, \dots
+\end{block}  
+\end{frame}
+
+\begin{frame}{Operators, Continued}
+\begin{block}{Commutator and Antiommutator of Operators}
+  $$\left[ \mathscr{A}, \mathscr{B} \right] = \mathscr{A} \mathscr{B} - \mathscr{B} \mathscr{A}$$
+  $$\left\{ \mathscr{A}, \mathscr{B} \right\} = \mathscr{A} \mathscr{B} + \mathscr{B} \mathscr{A}$$
+\end{block}  
+
+\begin{block}{Unitary Matrices and Hermite Matrices}
+  Unitary matrices are defined as:
+  $A^{-1} = A^{\dagger}$
+  
+  Hermite matrices are defined as:
+  $A^{\dagger} = A$
+\end{block}  
+\end{frame}
+
+\begin{frame}{Operators, Continued}
+\begin{block}{Adjunct (or Hermite transpose)}
+  $$A^{\dagger} = (A^T)^* = (A^*)^T$$
+\end{block}  
+
+Exercise C: For a Hermite operator(which means the matrix representation of operator is Hermite) $\mathscr{A}$, $\mathscr{A}\ket{a\,} = \omega_a \ket{a\,}$
+\begin{enumerate}
+  \item Prove that $\omega_a$ is real for any $a$.
+  \item Prove that $\braket{a|b\,} = \delta_{ab}$ for any $a, b$
+\end{enumerate}
+
+\end{frame}
+
+\section{Change of Basis}
+
+\begin{frame}{Change of Basis Using Dirac Notions}
+Assume we have two orthogonal normalised basis {$\ket{i\,}$} and {$\ket{a\,}$}
+
+\begin{equation*}
+\begin{aligned}
+  \braket{i\,|j\,} = \delta_{ij} \quad & \quad \sum \ket{i\,}\bra{i\,} = \mathbf{1} \\
+  \braket{\alpha|\beta} = \delta_{\alpha\beta} \quad & \quad \sum \ket{\alpha}\bra{\alpha} = \mathbf{1}
+\end{aligned}
+\end{equation*}
+
+To change the basis from {$\ket{i\,}$} to {$\ket{a\,}$}:
+
+\begin{equation*}
+\begin{aligned}
+  \ket{\alpha} &= \mathbf{1} \ket{\alpha} \\
+  &= \sum \ket{i\,}\braket{i\,| \alpha} \\
+  &= \sum \ket{i\,}(\mathbf{U})_{i\alpha}
+\end{aligned}
+\end{equation*}
+
+The matrix $\mathbf{U}$ is called the transformation matrix.
+With similar processed we could derive:
+$$\ket{i\,} = \sum \ket{i\,}(\mathbf{U}^\dagger)_{\alpha i} $$
+
+\end{frame}
+
+\begin{frame}{Change of Basis Using Dirac Notions}
+The matrix representation could be transformed using the same method:
+
+\begin{equation*}
+\begin{aligned}
+  \mathscr{O} \rightarrow \mathbf{O} \quad & \quad \mathbf{O}_{ij} = \bra{i\,} \mathscr{O} \ket{j\,} \\
+  \mathscr{O} \rightarrow \boldsymbol{\Omega} \quad & \quad \boldsymbol{\Omega}_{\alpha \beta} = \bra{\alpha} \mathscr{O} \ket{\beta}
+\end{aligned}
+\end{equation*}
+
+\begin{equation*}
+\begin{aligned}
+  \Omega_{\alpha \beta} &= \bra{\alpha} \mathscr{O} \ket{\beta} \\
+  &= \bra{\alpha} \mathbf{1} \mathscr{O} \mathbf{1} \ket{\beta} \\
+  &= \sum_{ij} \braket{\alpha | i\,} \bra{i\,} \mathscr{O} \ket{j\,} \braket{j\, | \beta} \\
+  &= \sum_{ij} (\mathbf{U}^\dagger)_{\alpha i} (\mathbf{O})_{ij} (\mathbf{U})_{j \beta}
+\end{aligned}
+\end{equation*}
+
+So matrices are connected by unitary transformations:
+\begin{equation*}
+  \boldsymbol{\Omega} = \mathbf{U}^\dagger \mathbf{OU} \quad \mathbf{O} = \mathbf{U} \boldsymbol{\Omega} \mathbf{U}^\dagger 
+\end{equation*}
+
+\end{frame}
+
+\begin{frame}{Diagonalisation}
+There are multiple ways of diagonalise an Hermite matrix.
+Here we only present the original method.
+
+For a given matrix $\mathbf{O}$, solving the eigenvalue equations:
+$$(\mathbf{O}-\lambda \mathbf{I}) \mathbf{c} = 0$$
+we obtain $\{ \lambda_i \}$ and $\{ \mathbf{c}^i \}$, and
+$$\mathbf{U} = \left( \, \mathbf{c}^1 \; \mathbf{c}^2 \; \dots \; \mathbf{c}^N \, \right)$$
+$$\boldsymbol{\Omega} = \mathbf{U}^\dagger \mathbf{OU} =
+\begin{pmatrix}
+\lambda_1 &  & & \\
+ & \lambda_2 & & \\
+ & & \ddots & \\
+ & & & \lambda_N 
+\end{pmatrix}
+$$
+
+\end{frame}
+
+\begin{frame}{Function of Matrices}
+For diagonalised matrices:
+$$
+f\,(\mathbf{a}) =
+\begin{pmatrix}
+f\,(a_1) &  & & \\
+ & f\,(a_2) & & \\
+ & & \ddots & \\
+ & & & f\,(a_N) 
+\end{pmatrix}
+$$
+
+And for undiagonalised matrices:
+$$\mathbf{U}^\dagger \mathbf{AU} = \mathbf{a}$$
+$$\mathbf{A} = \mathbf{Ua} \mathbf{U}^\dagger$$
+$$f\,(\mathbf{A}) = \mathbf{U} f\,(\mathbf{a}) \mathbf{U}^\dagger $$
+
+\end{frame}
+
+\section{Variational Method}
+
+\begin{frame}{Schrödinger Equation}
+\begin{block}{Time-dependent Schrödinger Equation(TDSE)}
+  Time-dependent Schrödinger Equation is a eigenvalue equation:
+  $$\mathscr{H} \ket{\Phi} = \mathscr{E} \ket{\Phi}$$
+  with $\mathscr{H}$ denotes Hamiltonian and $\mathscr{E}$ denotes energy.
+\end{block} 
+We shall not derive the equation here.
+
+The Hamiltonian of molecular system:
+$$\mathscr{H} = -\sum_i \frac{1}{2} \nabla_i^2 -\sum_A \frac{1}{2} \nabla_A^2 - \sum_{i,A} \frac{Z_A}{r_{iA}} + \sum_{i<j} \frac{Z_A}{r_{ij}} + \sum_{A<B} \frac{Z_A Z_B}{R_{AB}}$$
+\end{frame}
+
+\begin{frame}{Schrödinger Equation}
+There exist a set of accurate solutions to the equation:
+$$\mathscr{H} \ket{\Phi_i} = \mathscr{E}_i \ket{\Phi_i}$$
+
+with $\mathscr{E}_0 \leq \mathscr{E}_1 \leq \dots $.
+
+\bigskip
+
+We assume the set is complete, which means any state $\ket{\tilde{\Phi}}$ could be
+expressed in the form
+$$\ket{\tilde{\Phi}} = \sum c_i \ket{\Phi_i} $$
+\end{frame}
+
+\begin{frame}{Variational Principle}
+\begin{block}{Variational Principle}
+  For a given state $\ket{\Psi}$:
+
+  $$\frac{\Bra{\Psi}\mathscr{H}\Ket{\Psi}}{\Braket{\Psi|\Psi}} \geq \mathscr{E}_0$$
+
+  The equality holds if and only if $\ket{\Psi}$ = $\ket{\Phi_0}$
+\end{block} 
+\end{frame}
+
+\begin{frame}{Variational Principle}
+Now with this result we could write:
+$$\ket{\tilde{\Phi}} = \sum c_i \ket{\Psi_i} $$
+
+{$\ket{\Psi_i}$} is a set of known functions.
+
+Define a new matrix $\mathbf{H}$ as:
+$$ (\mathbf{H})_{ij} = H_{ij} = \Bra{\Psi_i} \mathscr{H} \Ket{\Psi_i} $$
+
+Assume that the state is normalised:
+$$ \braket{\tilde{\Phi} | \tilde{\Phi}} = \sum c_i^2 = 1$$
+
+\end{frame}
+
+\begin{frame}{Variational Principle}
+
+As $c_1, c_2, \dots, c_n$ is not indenpendent, Lagrange multiplier method
+must be put in use here:
+
+\begin{equation*}
+\begin{aligned}
+\mathcal{L}(c_1, \dots, c_N, \lambda)  &= \Bra{\Psi_i} \mathscr{H} \Ket{\Psi_i} - \lambda( \braket{\tilde{\Phi} | \tilde{\Phi}} - 1) \\
+&= \sum c_i c_j H_{ij} - \lambda \left( \sum c_i^2 - 1 \right)
+\end{aligned}
+\end{equation*}
+
+Minimizing $\mathcal{L}$ gives:
+
+$$\frac{\partial \mathcal{L}}{\partial c_k} = \sum c_j H_{kj} + \sum c_i H_{ik} - 2 \lambda c_k = 0$$
+
+$\mathbf{H}$ is symmetric, so:
+
+$$\sum H_{ik} c_k = \lambda c_k$$
+$$\mathbf{H} \mathbf{c} = \lambda \mathbf{c}$$
+
+\end{frame}
+
+\begin{frame}{Variational Principle}
+
+The equation
+$$\mathbf{H} \mathbf{c} = \lambda \mathbf{c}$$
+have $N$ different solutions:
+$$\mathbf{H} \mathbf{c^\alpha} = \lambda_\alpha \mathbf{c^\alpha}$$
+with $\lambda_0 \leq \dots \leq \lambda_{N-1}$.
+As $\mathscr{H}$ is Hermite, $\mathbf{H}$ must be Hermite too, that means:
+$$(\mathbf{c}^\alpha)^\dagger \mathbf{c}^\beta = \sum c_i^\alpha c_i^\beta = \delta_{\alpha \beta}$$
+
+\end{frame}
+
+\begin{frame}{Variational Principle}
+$$\mathbf{H} \mathbf{c^\alpha} = \lambda_\alpha \mathbf{c^\alpha}$$
+If we define two new matrices:
+$$(\mathbf{C})_{i\alpha} = C_{i\alpha} = c_i^\alpha$$
+$$(\boldsymbol{\Lambda})_{\alpha \beta} = \Lambda_{\alpha \beta} = \lambda_\alpha \delta_{\alpha \beta}$$
+The equation is equivalent to:
+$$\mathbf{HC}=\mathbf{C}\boldsymbol{\Lambda}$$
+\end{frame}
+
+\begin{frame}{Variational Principle}
+It could be proved that:
+$$\lambda_\alpha = \bra{\tilde{\Phi}_\alpha} \mathscr{H} \ket{\tilde{\Phi}_\alpha} $$
+by combining:
+$$\ket{\tilde{\Phi}} = \sum c_i \ket{\Psi_i} $$
+$$(\mathbf{c}^\alpha)^\dagger \mathbf{c}^\beta = \sum c_i^\alpha c_i^\beta = \delta_{\alpha \beta}$$
+$$\mathbf{H} \mathbf{c^\alpha} = \lambda_\alpha \mathbf{c^\alpha}$$
+
+So we would like to denote $\lambda$ as $E$ and re-write the equations as:
+$$\mathbf{HC}=\mathbf{CE}$$
+
+\end{frame}
+
+\begin{frame}[c,plain]
+\begin{center}
+\Huge\color{PPTBlue}\heiti\bfseries Thank you for listening!
+\end{center}
+\end{frame}
+
+\end{document} 
